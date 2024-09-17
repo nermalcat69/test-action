@@ -26184,8 +26184,9 @@ const core = __importStar(__nccwpck_require__(2186));
 const exec = __importStar(__nccwpck_require__(1514));
 async function run() {
     try {
-        const projectId = core.getInput('project-id', { required: true });
+        const serviceId = core.getInput('service-id', { required: true });
         const accessToken = core.getInput('access-token', { required: true });
+        // Check if zcli is installed, if not, install it
         try {
             await exec.exec('zcli', ['--version']);
         }
@@ -26199,8 +26200,13 @@ async function run() {
             ]);
             await exec.exec('chmod', ['+x', '/usr/local/bin/zcli']);
         }
+        // Set ZEROPS_TOKEN environment variable
         core.exportVariable('ZEROPS_TOKEN', accessToken);
-        const deployCommand = `zcli push --project-id ${projectId}`;
+        // Login using zcli with the Zerops token directly
+        core.info('Logging in with Zerops token...');
+        await exec.exec(`zcli login ${accessToken}`);
+        // Deploy project
+        const deployCommand = `zcli push --serviceId ${serviceId}`;
         core.info(`Executing: ${deployCommand}`);
         await exec.exec(deployCommand);
         core.info('Deployment completed successfully.');
