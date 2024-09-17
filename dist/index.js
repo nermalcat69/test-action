@@ -26187,7 +26187,7 @@ async function run() {
         const projectId = core.getInput('project-id', { required: true });
         const accessToken = core.getInput('access-token', { required: true });
         try {
-            await exec.exec('zerops', ['--version']);
+            await exec.exec('zcli', ['--version']);
         }
         catch (error) {
             core.info('Zerops CLI not found. Installing...');
@@ -26195,12 +26195,12 @@ async function run() {
                 '-L',
                 'https://github.com/zeropsio/zcli/releases/latest/download/zcli-linux-amd64',
                 '-o',
-                '/usr/local/bin/zerops'
+                '/usr/local/bin/zcli'
             ]);
-            await exec.exec('chmod', ['+x', '/usr/local/bin/zerops']);
+            await exec.exec('chmod', ['+x', '/usr/local/bin/zcli']);
         }
         core.exportVariable('ZEROPS_TOKEN', accessToken);
-        const deployCommand = `zerops deploy --project-id ${projectId}`;
+        const deployCommand = `zcli push --project-id ${projectId}`;
         core.info(`Executing: ${deployCommand}`);
         await exec.exec(deployCommand);
         core.info('Deployment completed successfully.');
