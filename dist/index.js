@@ -26186,26 +26186,17 @@ async function run() {
     try {
         const serviceId = core.getInput('service-id', { required: true });
         const accessToken = core.getInput('access-token', { required: true });
-        // Check if zcli is installed, if not, install it
-        try {
-            await exec.exec('zcli', ['--version']);
-        }
-        catch (error) {
-            core.info('Zerops CLI not found. Installing...');
-            await exec.exec('curl', [
-                '-L',
-                'https://github.com/zeropsio/zcli/releases/latest/download/zcli-linux-amd64',
-                '-o',
-                '/usr/local/bin/zcli'
-            ]);
-            await exec.exec('chmod', ['+x', '/usr/local/bin/zcli']);
-        }
-        // Set ZEROPS_TOKEN environment variable
+        core.info('Installing Zerops CLI...');
+        await exec.exec('curl', [
+            '-L',
+            'https://github.com/zeropsio/zcli/releases/latest/download/zcli-linux-amd64',
+            '-o',
+            '/usr/local/bin/zcli'
+        ]);
+        await exec.exec('chmod', ['+x', '/usr/local/bin/zcli']);
         core.exportVariable('ZEROPS_TOKEN', accessToken);
-        // Login using zcli with the Zerops token directly
         core.info('Logging in with Zerops token...');
         await exec.exec(`zcli login ${accessToken}`);
-        // Deploy project
         const deployCommand = `zcli push --serviceId ${serviceId}`;
         core.info(`Executing: ${deployCommand}`);
         await exec.exec(deployCommand);
