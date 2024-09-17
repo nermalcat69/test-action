@@ -6,7 +6,7 @@ runs:
   main: 'dist/index.js'
 
 inputs:
-  project-id:
+  service-id:
     description: 'The project ID'
     required: true
   access-token:
