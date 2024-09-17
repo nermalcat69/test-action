@@ -1,4 +1,4 @@
-name: 'Test Action'
+name: 'Deploy Test Action'
 description: 'GitHub Action to deploy projects '
 author: 'nermalcat69'
 runs:
