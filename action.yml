@@ -1,21 +1,22 @@
-name: 'Test Deploy Action'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-
-branding:
-  icon: 'heart'
-  color: 'red'
+name: 'Test Action'
+description: 'GitHub Action to deploy projects '
+author: 'Test User'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
 
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  project-id:
+    description: 'The project ID'
     required: true
-    default: '1000'
+  access-token:
+    description: 'The access token'
+    required: true
 
 outputs:
-  time:
-    description: 'Your output description here'
+  success-message:
+    description: 'Message indicating a successful deployment'
 
-runs:
-  using: node20
-  main: dist/index.js
+branding:
+  icon: 'server'
+  color: 'blue'
