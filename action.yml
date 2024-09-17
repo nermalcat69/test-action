@@ -1,6 +1,6 @@
 name: 'Test Action'
 description: 'GitHub Action to deploy projects '
-author: 'Test User'
+author: 'nermalcat69'
 runs:
   using: 'node20'
   main: 'dist/index.js'
